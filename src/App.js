@@ -15,11 +15,20 @@ import './App.css'
 class App extends Component {
   state = {
     cartList: [],
+    isOrderPlaced: false,
+    isDisabled: true,
   }
 
-  //   TODO: Add your code for remove all cart items, increment cart item quantity, decrement cart item quantity, remove cart item
   removeAllCartItems = () => {
     this.setState({cartList: []})
+  }
+
+  onPlacingOrder = () => {
+    this.setState({isOrderPlaced: true})
+  }
+
+  onSelectPayment = () => {
+    this.setState({isDisabled: false})
   }
 
   incrementCartItemQuantity = id => {
@@ -87,17 +96,22 @@ class App extends Component {
   }
 
   render() {
-    const {cartList} = this.state
+    const {cartList, isOrderPlaced, isDisabled} = this.state
+    console.log(isDisabled)
 
     return (
       <CartContext.Provider
         value={{
           cartList,
+          isOrderPlaced,
+          isDisabled,
           addCartItem: this.addCartItem,
           removeCartItem: this.removeCartItem,
           incrementCartItemQuantity: this.incrementCartItemQuantity,
           decrementCartItemQuantity: this.decrementCartItemQuantity,
           removeAllCartItems: this.removeAllCartItems,
+          onPlacingOrder: this.onPlacingOrder,
+          onSelectPayment: this.onSelectPayment,
         }}
       >
         <Switch>
